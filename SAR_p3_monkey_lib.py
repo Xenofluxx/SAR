@@ -31,8 +31,7 @@ def sort_index(d):
 class Monkey():
 
     def __init__(self):
-        # expresión regular separación de frase
-        # tener en cuenta dos saltos de línea? "\n"
+      
         self.r1 = re.compile('[.;?!]')
         # token alfanumérico
         # pasarlo a minúsculas más tarde?
@@ -47,21 +46,18 @@ class Monkey():
             tokenized_sent = self.r2.split(sentence)
             tokenized_sentence = ['$'] + tokenized_sent + ['$']
             for word in range(len(tokenized_sentence)):
-                if word < len(tokenized_sentence) - 1:
-                    # si no existe creamos una entra que contiene  una tupla formada por
-                    # un número y una lista de tuplas
+                if word < len(tokenized_sentence) - 1:                  
                     dual = tokenized_sentence[word]
                     if self.index['bi'].get(dual) is None:
                         self.index['bi'][dual] = []
-                    # rellenas
+               
                     self.index['bi'][dual].append("  " + tokenized_sentence[word + 1])
                 if tri:
 
                     if word < len(tokenized_sentence) - 2:
                         triple = (tokenized_sentence[word], tokenized_sentence[word + 1])
                         if self.index['tri'].get(triple) is None:
-                            self.index['tri'][triple] = []
-                        # rellenas
+                            self.index['tri'][triple] = []              
                         self.index['tri'][triple].append(tokenized_sentence[word + 2])
 
     ########################
@@ -82,7 +78,6 @@ class Monkey():
                 sentences= []              
                 for another_sentencess in sentencess:
                     sentences.extend(r3.split(another_sentencess))
-
                 for sentence in sentences:
                     self.index_sentence(sentence.lower(), tri)
 
