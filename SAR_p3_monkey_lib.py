@@ -42,9 +42,7 @@ class Monkey():
         #############
         # COMPLETAR #
         #############
-        # split te devuelve lo contrario, findall te devuelve exacto
-
-        #if not sentence ==  len(sentence) * "\n":
+       
         if sentence:
             tokenized_sent = self.r2.split(sentence)
             tokenized_sentence = ['$'] + tokenized_sent + ['$']
@@ -79,21 +77,19 @@ class Monkey():
             for line in fh.readlines():
                 sentencess = []
                 raw_sentence = line
-                sentencess.extend(self.r1.split(raw_sentence))
-                # patrón doble salto
+                sentencess.extend(self.r1.split(raw_sentence))               
                 r3 = re.compile('\r\n?|\n+')
-                sentences= []
-                # cortamos frases con doble salto
+                sentences= []              
                 for another_sentencess in sentencess:
                     sentences.extend(r3.split(another_sentencess))
 
                 for sentence in sentences:
                     self.index_sentence(sentence.lower(), tri)
 
-        # arreglamos el diccionario
+     
         for element in self.index['bi']:
             self.index['bi'][element] = Counter(self.index['bi'][element])
-        # contemplamos opcion tri
+     
         if tri:
             for element in self.index['tri']:
                 self.index['tri'][element] = Counter(self.index['tri'][element])
@@ -151,10 +147,10 @@ class Monkey():
         while n > 0:
             word_all_content = self.index['bi'].get(word)
             word_list = list(word_all_content)[1:][0]
-            #print(word_list)
+       
             word_aparitions = [aparitions for (aparitions,next_word) in word_list]
             word_next = [next_word for (aparitions, next_word) in word_list]
-            # guardamos esto para sacar segunda parte de la tupla $ en trigramas
+            
             if control:
                 control = False
                 next_words_ap = word_aparitions
@@ -165,17 +161,14 @@ class Monkey():
             word = random.choices(word_next, word_aparitions)[0].strip()
             #print(word)
 
-            # vamos guardando palabras en una lista
-            # si palabra es $ o tenemos 25 palabras
+           
             if word == '$' or counter == 25:
                 counter = 0
                 n -= 1
                 word = '$'
                 # quitamos corchetes
                 print(' '.join(list_of_words))
-                list_of_words = []
-                # Cuando lleguemos aquí no querremos añadir $ como palabra pero si coger uno de sus siguientes
-                # por lo tanto hacemos un continue y volvemos arriba del código
+                list_of_words = []              
                 continue
 
             counter += 1
@@ -195,21 +188,18 @@ class Monkey():
                 word_list = list(word_all_content)[1:][0]
                 word_aparitions = [aparitions for (aparitions,next_word) in word_list]
                 word_next = [next_word for (aparitions, next_word) in word_list]
-                # strip elimina espacios antes y después de strings
                 word = word2
                 word2 = random.choices(word_next, word_aparitions)[0].strip()
-                # vamos guardando palabras en una lista
-                # si palabra es $ o tenemos 25 palabras
+            
                 if word2 == '$' or counter == 25:
                     counter = 1
                     n -= 1
                     word = '$'
                     word2 = random.choices(next_word_next , next_words_ap)[0].strip()
-                    # quitamos corchetes
+                 
                     print(' '.join(list_of_words))
                     list_of_words = [word2]
-                    # Cuando lleguemos aquí no querremos añadir $ como palabra pero si coger uno de sus siguientes
-                    # por lo tanto hacemos un continue y volvemos arriba del código
+                
                     continue
 
                 counter += 1
